@@ -1,0 +1,34 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+/* #game{
+  margin: auto;
+  border: 1px solid black;
+} */
+
+#btn{
+  font-size: 2rem;
+  padding: 0.5rem 2rem;
+  border: 3px solid black;
+  border-radius: 0.3rem;
+  margin: 1rem auto;
+  display: block;
+  background-color: lightgreen;
+}
+#btn:active{
+  background-color: red;
+}
+
+
+
+body {
+    background-color: lightblue;
+}
+  
+h1 {
+color: navy;
+  margin-left: 20px;
+}
+

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=decive-width, initial-scale=1.0">
+    <style >
+        canvas {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); 
+            border: 1px solid black;
+            background-color: beige;
+        }  
+    </style>
+    <link rel="stylesheet" href="file.css">
+    
+</head>
+<div style = "position:relative; left:0px; top:100px; ">
+<body onload="myGameArea.start();">
+    <h1 style="text-align:center;"> THIS IS A SNAKE GAME! </h1>
+    <!-- <div id="game"></div> -->
+    <script src="snake-game.js"></script>
+    <div style = "position:relative; left:0px; top:550px; ">
+    <button onclick="startGame()" id="btn">Start!</button>
+</body>
+</div>
+</div>
+</html>
