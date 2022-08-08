@@ -3,32 +3,14 @@ var stop = false;
 let countWantToBeDeleted = 0;
 let counterForNumberOfFoodFound = 0;
 var randomBall;
-var counterOfGrowth = 0;
-var myGamePiece;
+
+let myGamePiece;
 var ColorFlag=1;
 var colors='';
 
-var myGameArea = {
-    canvas: document.createElement("canvas"),
-    start: function() {
-        this.canvas.width = 500;
-        this.canvas.height =500;
-        this.context = this.canvas.getContext("2d");
-        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-        this.interval = setInterval(updateGameArea, 200);
-        window.addEventListener('keydown', function(e){
-            myGameArea.key = e.keyCode;
-        })
+import {myGameArea} from "./game"
 
-    },
-    clear: function(){
-        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    }
-
-}
-
-
-function startGame(){
+export function startGame(){
     //myGamePiece = new createSquare(10, 120, "red", 30, 30);
     myGameArea.key = 39;
     myGamePiece = [ new createSquare(72, 120, "red", 30, 30), new createSquare(42, 120, "blue", 30, 30),new createSquare(12, 120, "green", 30, 30)];
@@ -37,22 +19,20 @@ function startGame(){
 
 function updateGameArea(){
     myGameArea.clear();
-    hitWall();
+    
     counterForNumberOfFoodFound === 0 ?  funcOfRandomFood(): 0; //creating a food
-   
+    hitWall();
     //setTimeout(() => { randomBalls }, 1000);
     if(!stop){
-        for(const index in myGamePiece){
+        for(let index in myGamePiece){
             myGamePiece[index].newPos();
-        }
+        }           
     }
-    for(const index in myGamePiece){
+    for(let index in myGamePiece){
         myGamePiece[index].update();
     }
-    
-    checkingForEatingTheFood() ? 0 : randomBall.update();
     hitItSelf() ? randomBall.update():0;
-
+    checkingForEatingTheFood() ? 0 : randomBall.update();
 }
 
 function createSquare(x,y,color,width,height){
@@ -75,18 +55,18 @@ function createSquare(x,y,color,width,height){
     }
 }
 
-function returnRandomNoInRange(){
+export function returnRandomNoInRange(){
     return Math.floor(Math.random() * (470 - 0 + 1) + 0);
 }
 
-function funcOfRandomFood(){
+export function funcOfRandomFood(){
     let x = returnRandomNoInRange();
     let y = returnRandomNoInRange();
-    randomBall = new createSquare(x, y, "black", 10, 10);
+    randomBall = new createSquare(x, y, "pink", 10, 10);
     counterForNumberOfFoodFound++;
 }
 
-function checkingForEatingTheFood(){
+export function checkingForEatingTheFood(){
     if(myGamePiece[0].x < randomBall.x +randomBall.width &&
         myGamePiece[0].x + myGamePiece[0].width > randomBall.x &&
         myGamePiece[0].y < randomBall.y + randomBall.height &&
@@ -97,7 +77,7 @@ function checkingForEatingTheFood(){
     }
 }
 
-function hitItSelf(){
+export function hitItSelf(){
 {
     for (let index = 1; index < myGamePiece.length; index++) {
 
@@ -116,8 +96,8 @@ function hitItSelf(){
 }
 }
 
-i=0;
-function growing(){
+
+export function growing(){
  //var newHead = new createSquare(myGamePiece[myGamePiece.length()-1].x + 30, myGamePiece[myGamePiece.length()-1].y + 30, "red", 30, 30);
  switch (ColorFlag) {
     case 1:
@@ -138,10 +118,10 @@ function growing(){
         break;
  }
  myGamePiece.push(new createSquare(72, 120, colors, 30, 30));
- //i++;
+
 }
 
-function shifting(){
+export function shifting(){
 
     for(let i=myGamePiece.length - 1; i>=1; i--){
         myGamePiece[i].x = myGamePiece[i-1].x;
@@ -153,53 +133,48 @@ function shifting(){
 
 
 
-function hitWall(){
-    if((myGamePiece[0].x >= 0 && myGamePiece[0].x < 455)  && (myGamePiece[0].y >=0 && myGamePiece[0].y < 470)){
+export function hitWall(){
+    if((myGamePiece[0].x >= 0 && myGamePiece[0].x < 455)  && (myGamePiece[0].y >=0 && myGamePiece[0].y < 470) && !stop){
         switch(true){
             case myGameArea.key == 37 && direction !== "RIGHT":
-                
-                if(!stop)
-                {    
-                    myGamePiece[0].speedX = -30;
-                    myGamePiece[0].speedY=0;
-                    direction = "LEFT";
-                    shifting();
-                }    
+                  
+                myGamePiece[0].speedX = -30;
+                myGamePiece[0].speedY=0;
+                direction = "LEFT";
+                shifting();
+                    
                 break;
             case myGameArea.key == 39 && direction !== "LEFT":
               
-                if(!stop)
-                {       
-                    myGamePiece[0].speedX = 30;
-                    myGamePiece[0].speedY=0;
-                    direction = "RIGHT";
-                             shifting();
-                }                    
+                      
+                myGamePiece[0].speedX = 30;
+                myGamePiece[0].speedY=0;
+                direction = "RIGHT";
+                shifting();
+                                   
                 break;
             case myGameArea.key == 38 && direction !== "UP":
                
-                if(!stop)
-                {      
-                    myGamePiece[0].speedY = -30;
-                    myGamePiece[0].speedX=0;
-                    direction = "DOWN";
-                              shifting();
-                }                    
+                     
+                myGamePiece[0].speedY = -30;
+                myGamePiece[0].speedX=0;
+                direction = "DOWN";
+                shifting();
+                              
                 break;
             case myGameArea.key == 40 && direction !== "DOWN":
                 
-                if(!stop)
-                {              
-                    myGamePiece[0].speedY = 30;
+                             
+                myGamePiece[0].speedY = 30;
                 myGamePiece[0].speedX=0;
                 direction = "UP";
-                  shifting();
-                }                    
+                shifting();
+                                    
                 break;
             
             default:
-                if(!stop)
-                 shifting();
+                
+                shifting();
    
         }
     }else{
@@ -210,3 +185,5 @@ function hitWall(){
     }
 }
 
+
+export {updateGameArea, createSquare, myGamePiece};
